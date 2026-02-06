@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rose Day 🌹</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    height:100vh;
+    background:linear-gradient(135deg,#ffe6cc,#ffd1dc);
+    font-family:'Patrick Hand', cursive;
+    color:#3b1f1f;
+    overflow:hidden;
+}
+
+/* Falling petals */
+.petal{
+    position:fixed;
+    top:-10%;
+    font-size:18px;
+    opacity:0.6;
+    animation:fall linear infinite;
+    pointer-events:none;
+}
+@keyframes fall{
+    to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* Scene system */
+.scene{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    animation:fadeZoom .8s ease;
+}
+.hidden{display:none;}
+
+@keyframes fadeZoom{
+    from{opacity:0;transform:scale(1.05)}
+    to{opacity:1;transform:scale(1)}
+}
+
+.tap{margin-top:20px;opacity:.6;font-size:14px;}
+
+button{
+    margin:10px;
+    padding:12px 24px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    cursor:pointer;
+    font-family:'Patrick Hand';
+}
+.yes{background:#ff4d6d;color:white;}
+.no{background:#ccc;}
+
+img{
+    width:240px;
+    border-radius:18px;
+    margin:15px 0;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+/* Love Letter */
+.letter{
+    background:#f3e0c2;
+    padding:25px;
+    border-radius:15px;
+    max-width:92%;
+    max-height:70vh;
+    overflow-y:auto;
+    font-family:'Dancing Script', cursive;
+    font-size:20px;
+    line-height:1.7;
+    box-shadow:0 15px 35px rgba(0,0,0,.3);
+    animation:glow 3s infinite alternate;
+}
+@keyframes glow{
+    from{box-shadow:0 0 15px rgba(255,180,120,.4)}
+    to{box-shadow:0 0 30px rgba(255,120,120,.6)}
+}
+
+.highlight{
+    display:inline-block;
+    background:rgba(255,105,135,.35);
+    padding:4px 10px;
+    border-radius:8px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+/* Rose */
+.rose{
+    font-size:60px;
+    animation:float 3s infinite ease-in-out;
+}
+@keyframes float{50%{transform:translateY(-12px)}}
+
+/* Signature */
+.signature{
+    margin-top:30px;
+    text-align:right;
+}
+.signature svg path{
+    stroke-dasharray:500;
+    stroke-dashoffset:500;
+    animation:draw 3s ease forwards;
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+.sign-name{
+    font-family:'Dancing Script', cursive;
+    font-size:26px;
+    margin-top:-10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Falling petals -->
+<script>
+for(let i=0;i<25;i++){
+    let p=document.createElement("div");
+    p.className="petal";
+    p.innerHTML="🌸";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=6+Math.random()*6+"s";
+    p.style.fontSize=14+Math.random()*14+"px";
+    document.body.appendChild(p);
+}
+</script>
+
+<!-- Scene 1 -->
+<div class="scene" id="s1">
+    <h2>Hello my Panda 🐼</h2>
+    <p>I have something for you…<br>(Of course, I am all yours)</p>
+    <p class="tap">Tap anywhere</p>
+</div>
+
+<!-- Scene 2 -->
+<div class="scene hidden" id="s2">
+    <h2>Wait a second 😌</h2>
+    <p>Before you guess anything…<br>stay with me.</p>
+    <p class="tap">Tap</p>
+</div>
+
+<!-- Scene 3 -->
+<div class="scene hidden" id="s3">
+    <img src="photo.jpg">
+    <p>
+        Omg… I just fall everything after seeing this.<br>
+        How can someone be this beautiful?<br>
+        <b>haaye nazar na lg jaaye 🧿🧿</b>
+    </p>
+    <button class="yes" onclick="accept(event)">Accept the rose 🌹</button>
+    <button class="no" onclick="reject(event)">Reject 🙄</button>
+</div>
+
+<!-- Reject -->
+<div class="scene hidden" id="s4">
+    <h2>🥺🥺🥺</h2>
+    <p>You are rejecting me?<br>Sorry… aaj ye option nhii h<br><b>(kabhi nhi h)</b></p>
+    <button class="yes" onclick="back(event)">Choose YES 😑</button>
+</div>
+
+<!-- Scene 5 -->
+<div class="scene hidden" id="s5">
+    <div class="rose">🌹</div>
+    <p>It’s just a view occurring every time inside me<br>when I see you.</p>
+    <p class="tap">Tap</p>
+</div>
+
+<!-- Scene 6 -->
+<div class="scene hidden" id="s6">
+    <div class="letter" id="letter1"></div>
+    <p class="tap">Tap</p>
+</div>
+
+<!-- Scene 6B -->
+<div class="scene hidden" id="s6b">
+    <div class="letter">
+        Baby… maybe our school is over,<br>
+        and I didn’t get time to spend with you.<br><br>
+
+        I know you are afraid of people getting to know about us.<br>
+        No problem my baby.<br>
+        <span class="highlight">Forget everything.</span><br><br>
+
+        I just want to hug you tightly,<br>
+        kiss your forehead,<br>
+        and say…<br><br>
+
+        <span class="highlight">
+            “Don’t worry everything is okay my love,<br>
+            I am with you no matter what”
+        </span><br><br>
+
+        <span class="highlight">
+            “You are mine aur me toh hu hi tera”
+        </span><br><br>
+
+        Aur haan yaad rakhna 😌<br>
+        <span class="highlight">volleyball toh touch bhi na kriyo 🏐</span><br><br>
+
+        I love you so much my Panda 💕<br>
+        (Meri rose toh tu khud hai — poori ki poori 🌹)
+
+        <div class="signature">
+            <svg viewBox="0 0 400 100">
+                <path d="M20 60 Q80 10 140 60 T260 60 T380 50"
+                      fill="none" stroke="#3b1f1f"
+                      stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <div class="sign-name">Sparsh</div>
+        </div>
+    </div>
+    <p class="tap">Tap</p>
+</div>
+
+<!-- Final -->
+<div class="scene hidden" id="s7">
+    <div class="rose">🌹🌹🌹</div>
+    <h2>Happy Rose Day</h2>
+    <p>This rose is yours 🌹<br>and of course…<br><b>me also ❤️</b></p>
+</div>
+
+<script>
+let current=1;
+document.body.addEventListener("click",()=>{
+    if(current===6){
+        s6.classList.add("hidden");
+        s6b.classList.remove("hidden");
+        current=7;
+        return;
+    }
+    if(current<8){
+        document.getElementById("s"+current)?.classList.add("hidden");
+        current++;
+        document.getElementById("s"+current)?.classList.remove("hidden");
+        if(current===6) typeLetter();
+    }
+});
+
+function reject(e){e.stopPropagation();s3.classList.add("hidden");s4.classList.remove("hidden");}
+function back(e){e.stopPropagation();s4.classList.add("hidden");s3.classList.remove("hidden");}
+function accept(e){e.stopPropagation();s3.classList.add("hidden");current=5;s5.classList.remove("hidden");}
+
+const text1=`
+I just wanted to say that maybe I am not physically available,
+but the only person in my mind is you every time.<br><br>
+
+Whether I am angry or upset, you are the only one in my mind.<br>
+<span class="highlight">You are the one I love.</span><br>
+<span class="highlight">You are the one I want.</span><br>
+<span class="highlight">You are the one I think of.</span><br><br>
+
+Believe it or not, I am addicted to you.<br><br>
+<span class="highlight">I will never give up on you</span><br><br>
+doesn’t matter how much I get hurt.<br><br>
+
+I will always be there for you my love.
+`;
+
+let i=0;
+function typeLetter(){
+    const el=document.getElementById("letter1");
+    el.innerHTML="";
+    let t=setInterval(()=>{
+        el.innerHTML=text1.slice(0,i++);
+        el.scrollTop=el.scrollHeight;
+        if(i>text1.length) clearInterval(t);
+    },25);
+}
+</script>
+
+</body>
+</html>
